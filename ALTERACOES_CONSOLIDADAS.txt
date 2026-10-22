@@ -1,0 +1,9 @@
+DELÍCIAS DA CIDA — VERSÃO CONSOLIDADA
+
+Esta versão reúne em um único projeto:
+1. Formulário principal simplificado (quantidade livre, data, ocasião opcional e detalhes opcionais; finalização no WhatsApp).
+2. IA da Cida compacta com apenas Receita ou Dica de limpeza.
+3. Cabeçalho compacto com menu suspenso.
+4. Bentô simplificado: escolha da frase, tamanho automático, massa, recheio, imagem opcional e WhatsApp.
+5. Mosaico com as novas fotos na seção da história da Cida.
+6. Projeto completo com todos os assets, páginas, catálogos e integrações.

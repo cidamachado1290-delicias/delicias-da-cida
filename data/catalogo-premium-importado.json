@@ -1,0 +1,19 @@
+{
+  "origem": "https://deliciasdacidapba.com.br/",
+  "estrategia": "Trazer o máximo do site antigo para o novo site sem inventar dados: produto com dado estruturado vira card; catálogo visual vira galeria premium.",
+  "secoes": [
+    "Mais Pedidos",
+    "Bolos Artesanais",
+    "Doces Gourmet",
+    "Confeitaria Inclusiva",
+    "Chocotones Especiais",
+    "Ovos de Páscoa",
+    "Galeria de Catálogos"
+  ],
+  "regras": {
+    "preco_inseguro": "Consultar valor pelo WhatsApp",
+    "produto_sazonal": "Produto sazonal · consulte disponibilidade",
+    "bento_cake": "Não forçar imagem automática se houver risco de foto incorreta; validar futuramente com fotos novas.",
+    "catalogos_visuais": "Usar imagens como galeria premium quando o texto estiver dentro da própria arte."
+  }
+}

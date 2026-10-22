@@ -1,0 +1,107 @@
+[
+  {
+    "categoria": "Confeitaria Inclusiva",
+    "nome": "Bolo Zero Glúten, Zero Lactose",
+    "precoReferencia": "R$ 89,90/kg",
+    "origem": "site atual",
+    "status": "importar fotos/preços finais"
+  },
+  {
+    "categoria": "Confeitaria Inclusiva",
+    "nome": "Bolos Zero Glúten",
+    "precoReferencia": "R$ 89,90/kg",
+    "origem": "site atual",
+    "status": "importar fotos/preços finais"
+  },
+  {
+    "categoria": "Delícias Mais Pedidas",
+    "nome": "Mini/Mega Bentô Cake",
+    "precoReferencia": "R$ 49,90 a R$ 84,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Delícias Mais Pedidas",
+    "nome": "Zuppa",
+    "precoReferencia": "R$ 39,90 a R$ 64,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Delícias Mais Pedidas",
+    "nome": "Banoffee",
+    "precoReferencia": "R$ 74,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Bolos",
+    "nome": "Bolo Recheios Básicos",
+    "precoReferencia": "R$ 74,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Bolos",
+    "nome": "Bolo Recheios Nobres",
+    "precoReferencia": "R$ 84,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Bolos",
+    "nome": "Bolo Recheios Especiais",
+    "precoReferencia": "R$ 89,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Bolos",
+    "nome": "Bolo Super Especiais",
+    "precoReferencia": "R$ 99,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Sobremesas Especiais",
+    "nome": "Torta Paulista",
+    "precoReferencia": "R$ 74,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Sobremesas Especiais",
+    "nome": "Pavê Delícia",
+    "precoReferencia": "R$ 74,90 a R$ 79,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Sobremesas Especiais",
+    "nome": "Bolo Pão de Mel",
+    "precoReferencia": "R$ 59,90 a R$ 119,90",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Sobremesas Especiais",
+    "nome": "Sobremesa na Taça",
+    "precoReferencia": "R$ 79,90 a R$ 99,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Lançamentos",
+    "nome": "Torta Cheesecake",
+    "precoReferencia": "R$ 84,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  },
+  {
+    "categoria": "Lançamentos",
+    "nome": "Torta de Vitrine",
+    "precoReferencia": "R$ 74,90/kg",
+    "origem": "site atual",
+    "status": "confirmar"
+  }
+]

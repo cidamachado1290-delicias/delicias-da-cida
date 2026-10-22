@@ -1,0 +1,94 @@
+[
+  {
+    "categoria": "Bombons",
+    "subcategoria": "Chocolate ao leite",
+    "itens": [
+      "Prestígio",
+      "Prestígio combinado",
+      "Maracujá combinado",
+      "Nutella",
+      "Ninho com Nutella",
+      "Sensação",
+      "Leite condensado",
+      "Leite condensado com cereja",
+      "Leite condensado com damasco",
+      "Nozes",
+      "Miscelânea de castanhas",
+      "Gotas de chocolate com ganache e cereja",
+      "Pirâmide trufada",
+      "Concha com brigadeiro",
+      "Leite Ninho",
+      "Coração/brigadeiro"
+    ]
+  },
+  {
+    "categoria": "Bombons",
+    "subcategoria": "Chocolate branco",
+    "itens": [
+      "Romeu e Julieta",
+      "Mousse de limão",
+      "Nutella",
+      "Nozes",
+      "Miscelânea de castanhas",
+      "Bombonella cookies",
+      "Gotas com ganache e cereja",
+      "Ninho perolado",
+      "Concha com brigadeiro/Ninho"
+    ]
+  },
+  {
+    "categoria": "Brigadeiros especiais",
+    "itens": [
+      "Limão",
+      "Churros",
+      "Morango/PowerBall",
+      "Crocante/PowerBall",
+      "Flocado com wafer",
+      "Leite Ninho com uva",
+      "Love sabor avelã",
+      "Leite Ninho simples",
+      "Brigadeiro Flor"
+    ]
+  },
+  {
+    "categoria": "Copinhos e tacinhas",
+    "itens": [
+      "Brigadeiro tradicional",
+      "Romeu e Julieta",
+      "Napolitano 3 cores",
+      "Brigadeiro branco decorado",
+      "Mousse de limão",
+      "Prestígio com cereja",
+      "Ganache com cereja",
+      "Ganache com coraçãozinho de chocolate",
+      "Brigadeiro trufado",
+      "Brigadeiro Ninho e/ou caramelo",
+      "Mousse de chocolate com castanha",
+      "Mousse de chocolate com cereja",
+      "Camafeu de nozes"
+    ]
+  },
+  {
+    "categoria": "Quadradinhos",
+    "itens": [
+      "Mousse de chocolate ao leite",
+      "Mousse de morango",
+      "Coraçãozinho de chocolate",
+      "Brownie de chocolate gourmet",
+      "Mousse de limão",
+      "Brownie de chocolate branco gourmet"
+    ]
+  },
+  {
+    "categoria": "Fondados e doces no palito",
+    "itens": [
+      "Damasco",
+      "Camafeu de nozes",
+      "Prestígio com abacaxi ou cereja",
+      "Doce no palito 2 doces",
+      "Doce no palito 3 doces",
+      "Pop cake",
+      "Pirulitos"
+    ]
+  }
+]
