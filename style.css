@@ -302,7 +302,7 @@ select#pessoas{appearance:auto}
 @media (max-width: 680px){
   .product-card[data-product-id="4537"] .product-media{
     height:230px!important;
-    background-image:url('https://deliciasdacidapba.com.br/wp-content/uploads/2025/10/bolo-zero-gluten-delicias-da-cida-paranaiba-1-600x600.webp')!important;
+    background-image:url('https://impkkhztouayqhzwsaog.supabase.co/storage/v1/object/public/catalogo-produtos/legacy/2025/10/bolo-zero-gluten-delicias-da-cida-paranaiba-1.webp')!important;
     background-size:cover!important;
     background-position:center center!important;
     background-repeat:no-repeat!important;
