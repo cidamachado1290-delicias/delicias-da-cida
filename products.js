@@ -384,7 +384,7 @@
     const page = $('#productPage');
     if(!page) return;
     const id = Number(new URLSearchParams(location.search).get('id'));
-    if(!id || !REAL_PRODUCTS[id]){ page.innerHTML = emptyState('Produto não encontrado', 'Volte para a home e escolha uma delícia do catálogo.'); return; }
+    if(!id){ page.innerHTML = emptyState('Produto não encontrado', 'Volte para a home e escolha uma delícia do catálogo.'); return; }
     let product = REAL_PRODUCTS[id];
     try{ product = mergeProduct(product, await getJson(`/products/${id}`)); }catch(err){}
     renderProductPage(product);
