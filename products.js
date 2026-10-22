@@ -216,7 +216,7 @@
     const cachedImages = cached && Array.isArray(cached.images) ? cached.images : [];
     return Object.assign({}, cached || {}, live, {
       images: liveImages.length ? liveImages : cachedImages,
-      priceText: (live.price_html ? strip(live.price_html) : '') || (cached && cached.priceText) || '',
+      priceText: live.priceText || (live.price_html ? strip(live.price_html) : '') || (cached && cached.priceText) || '',
       description: live.description || (cached && cached.description) || live.short_description || '',
       short_description: live.short_description || (cached && cached.short_description) || live.description || '',
       permalink: live.permalink || (cached && cached.permalink) || ''
@@ -387,6 +387,10 @@
     if(!id){ page.innerHTML = emptyState('Produto não encontrado', 'Volte para a home e escolha uma delícia do catálogo.'); return; }
     let product = REAL_PRODUCTS[id];
     try{ product = mergeProduct(product, await getJson(`/products/${id}`)); }catch(err){}
+    if(!product){
+      page.innerHTML = emptyState('Produto não encontrado', 'Volte para a home e escolha uma delícia do catálogo.');
+      return;
+    }
     renderProductPage(product);
   }
   function renderProductPage(product){
