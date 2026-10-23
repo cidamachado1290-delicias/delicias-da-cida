@@ -72,17 +72,23 @@
     window.fbq('init', META_ID);
   }
   function setConsent(accept) {
+    const wasLoaded = loaded || enabled;
     choice = accept ? 'accepted' : 'rejected';
     try { localStorage.setItem(KEY, choice); } catch (_) {}
     enabled = accept;
-    if (enabled) {
+
+    if (accept) {
       loadAnalytics();
-      // Replay only the page view. Do not retroactively attribute earlier clicks.
       const page = events.find(e => e.name === 'page_view');
-      if (page) send(page);
+      if (page && !wasLoaded) send(page);
     }
+
     const banner = document.getElementById('cida-consent-banner');
     if (banner) banner.remove();
+
+    // Scripts ja carregados nao podem ser descarregados com seguranca.
+    // Ao revogar, recarregamos sem carregar tags opcionais.
+    if (!accept && wasLoaded) location.reload();
   }
   function showBanner() {
     if (choice !== null || document.getElementById('cida-consent-banner')) return;
@@ -112,8 +118,8 @@
     consent:()=>choice,
     setConsent:setConsent,
     reopenConsent:function(){
-      choice=null;
-      showBanner();
+      try { localStorage.removeItem(KEY); } catch (_) {}
+      location.reload();
     },
     record:record
   });
@@ -135,6 +141,26 @@
     const id=ev.target&&ev.target.id;
     if(forms.has(id))record('form_submit_attempt',{source,form_id:id,status:'attempt'});
   },true);
+  function addPreferencesButton() {
+    if (document.getElementById('cida-privacy-preferences')) return;
+    const host = document.querySelector('footer') || document.body;
+    const btn = document.createElement('button');
+    btn.id = 'cida-privacy-preferences';
+    btn.type = 'button';
+    btn.textContent = 'Preferencias de privacidade';
+    btn.setAttribute('aria-label', 'Alterar preferencias de privacidade');
+    btn.style.cssText = 'display:block;margin:12px auto;padding:8px 12px;border:1px solid #b77b94;border-radius:9px;background:transparent;color:inherit;font:12px system-ui,sans-serif;cursor:pointer';
+    btn.addEventListener('click', function () {
+      window.CidaFlowTracking.reopenConsent();
+    });
+    host.appendChild(btn);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', addPreferencesButton, {once:true});
+  } else {
+    addPreferencesButton();
+  }
   if (choice==='accepted') {
     enabled=true;loadAnalytics();
     events.forEach(send);
