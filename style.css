@@ -723,3 +723,20 @@ select#pessoas{appearance:auto}
  .cida-story-premium .cida-stats-left>div{padding:14px 10px}
  .cida-story-premium .cida-stats-left b{font-size:28px}
 }
+
+/* PACOTE 27 - Avaliacoes: carrossel premium acessivel */
+.avaliacoes .section-title h2{font-size:clamp(32px,4.5vw,58px);line-height:1.08;max-width:850px;margin:14px auto}
+.avaliacoes .cida-review-carousel{position:relative;max-width:100%}
+.avaliacoes .cida-review-toolbar{display:flex;justify-content:flex-end;align-items:center;gap:12px;margin:0 3px 14px}
+.avaliacoes .cida-review-toolbar button{height:42px;width:42px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:#fff;color:var(--pink2);font-size:18px;cursor:pointer}
+.avaliacoes .cida-review-toolbar button:disabled{opacity:.3;cursor:default}
+.avaliacoes .cida-review-position{min-width:60px;text-align:center;color:var(--muted);font-weight:800;font-size:13px}
+.avaliacoes .reviews-grid-premium{display:flex!important;grid-template-columns:none!important;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;overscroll-behavior-x:contain;scrollbar-width:thin;padding:4px 4px 22px;align-items:stretch}
+.avaliacoes .review-card-premium{flex:0 0 calc((100% - 48px)/4);min-width:0;scroll-snap-align:start;box-sizing:border-box;height:auto;display:flex;align-items:flex-start;gap:12px;overflow-wrap:anywhere}
+.avaliacoes .review-card-premium .review-text{min-width:0}
+.avaliacoes .review-card-premium h3{overflow-wrap:anywhere;font-size:clamp(16px,1.2vw,19px)}
+.avaliacoes .review-card-premium p{white-space:normal;line-height:1.55}
+.avaliacoes .review-avatar{flex-shrink:0}
+@media(max-width:1050px){.avaliacoes .review-card-premium{flex-basis:calc((100% - 16px)/2)}}
+@media(max-width:650px){.avaliacoes .review-card-premium{flex-basis:calc(100% - 22px)}.avaliacoes .cida-review-toolbar{justify-content:center}.avaliacoes .review-card-premium{min-height:205px}}
+@media(prefers-reduced-motion:reduce){.avaliacoes .reviews-grid-premium{scroll-behavior:auto}}
