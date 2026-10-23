@@ -261,26 +261,57 @@
   }
   function productGallery(product){
     const imgs = imagesOf(product);
-    const name = product && product.name ? product.name : 'Delícia artesanal';
+    const name = product && product.name ? product.name : 'DelÃ­cia artesanal';
     if(!imgs.length) return `<div class="detail-media no-image"><span>${esc(name)}</span></div>`;
     return `<div class="detail-gallery" data-gallery>
-      <div class="detail-media"><img data-main-image src="${esc(imgs[0].src)}" alt="${esc(imgs[0].alt || name)}" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')"></div>
-      ${imgs.length > 1 ? `<div class="gallery-thumbs">${imgs.map((img, index) => `<button type="button" class="gallery-thumb ${index === 0 ? 'active' : ''}" data-gallery-thumb="${index}" data-src="${esc(img.src)}" data-alt="${esc(img.alt || name)}"><img src="${esc(img.src)}" alt="${esc(img.alt || name)}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')"></button>`).join('')}</div>` : ''}
+      <div class="detail-media">
+        <img data-main-image src="${esc(imgs[0].src)}" alt="${esc(imgs[0].alt || name)}" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')">
+        ${imgs.length > 1 ? `<button type="button" class="gallery-arrow gallery-prev" data-gallery-prev aria-label="Foto anterior">&#10094;</button><button type="button" class="gallery-arrow gallery-next" data-gallery-next aria-label="PrÃ³xima foto">&#10095;</button><span class="gallery-count" data-gallery-count>1/${imgs.length}</span>` : ''}
+      </div>
+      ${imgs.length > 1 ? `<div class="gallery-thumbs" aria-label="Fotos do produto">${imgs.map((img, index) => `<button type="button" class="gallery-thumb ${index === 0 ? 'active' : ''}" data-gallery-thumb="${index}" data-src="${esc(img.src)}" data-alt="${esc(img.alt || name)}" aria-label="Exibir foto ${index + 1}" aria-pressed="${index === 0}"><img src="${esc(img.src)}" alt="${esc(img.alt || name)}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')"></button>`).join('')}</div>` : ''}
     </div>`;
   }
   function bindGalleries(root){
     (root || document).querySelectorAll('[data-gallery]').forEach(gallery => {
       const main = gallery.querySelector('[data-main-image]');
-      gallery.querySelectorAll('[data-gallery-thumb]').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if(!main) return;
-          main.src = btn.dataset.src || main.src;
-          main.alt = btn.dataset.alt || main.alt;
-          gallery.querySelectorAll('[data-gallery-thumb]').forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
+      const thumbs = [...gallery.querySelectorAll('[data-gallery-thumb]')];
+      const counter = gallery.querySelector('[data-gallery-count]');
+      let selected = 0;
+      const show = index => {
+        if(!main || !thumbs.length) return;
+        selected = (index + thumbs.length) % thumbs.length;
+        const btn = thumbs[selected];
+        main.src = btn.dataset.src || main.src;
+        main.alt = btn.dataset.alt || main.alt;
+        thumbs.forEach((b, i) => {
+          b.classList.toggle('active', i === selected);
+          b.setAttribute('aria-pressed', String(i === selected));
         });
+        if(counter) counter.textContent = `${selected + 1}/${thumbs.length}`;
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      };
+      thumbs.forEach((btn, index) => btn.addEventListener('click', () => show(index)));
+      gallery.querySelector('[data-gallery-prev]')?.addEventListener('click', () => show(selected - 1));
+      gallery.querySelector('[data-gallery-next]')?.addEventListener('click', () => show(selected + 1));
+      gallery.addEventListener('keydown', event => {
+        if(event.key === 'ArrowLeft'){ event.preventDefault(); show(selected - 1); }
+        if(event.key === 'ArrowRight'){ event.preventDefault(); show(selected + 1); }
       });
     });
+  }
+  function premiumDescription(raw){
+    const clean = safeHtml(raw || '<p>Consulte disponibilidade, valores e prazo de encomenda pelo WhatsApp.</p>');
+    const wrapper = document.createElement('div');
+    wrapper.innerHTML = clean;
+    const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT);
+    const nodes = [];
+    while(walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(node => {
+      // Treat literal backslash+n imported from the legacy catalog, without changing product data.
+      const normalized = node.nodeValue.replace(/\\r\\n|\\n|\\r/g, '\n');
+      if(normalized !== node.nodeValue) node.nodeValue = normalized;
+    });
+    return wrapper.innerHTML;
   }
   function productUrl(id){ return `produto.html?id=${encodeURIComponent(id)}`; }
   function categoryUrl(id, name){ return `categoria.html?id=${encodeURIComponent(id)}${name ? `&nome=${encodeURIComponent(name)}` : ''}`; }
@@ -395,29 +426,37 @@
   }
   function renderProductPage(product){
     const page = $('#productPage');
-    const name = product.name || 'Produto do catálogo';
-    const descriptionHtml = safeHtml(product.description || product.short_description || '<p>Produto artesanal Delícias da Cida. Consulte valores, sabores, disponibilidade e prazo de encomenda pelo WhatsApp.</p>');
+    const name = product.name || 'Produto do catÃ¡logo';
+    const displayName = name.replace(/^\s*\d+\)\s*/, '');
+    const descriptionHtml = premiumDescription(product.description || product.short_description || '');
     const category = product.categories && product.categories[0] ? product.categories[0] : null;
-    page.innerHTML = `<section class="detail-hero">
-      <a class="back-link" href="index.html#cardapio-premium">← Voltar ao cardápio</a>
+    const summary = strip(product.short_description || '').replace(/\\r\\n|\\n|\\r/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 190);
+    const orderHref = whatsUrl(name);
+    page.innerHTML = `<section class="detail-hero premium-product-page">
+      <a class="back-link" href="index.html#cardapio-premium">â† Voltar ao cardÃ¡pio</a>
       <div class="detail-grid">
         ${productGallery(product)}
         <div class="detail-copy">
-          ${category ? `<span class="tag">${esc(category.name)}</span>` : '<span class="tag">Delícias da Cida</span>'}
-          <h1>${esc(name)}</h1>
+          ${category ? `<span class="tag">${esc(category.name)}</span>` : '<span class="tag">DelÃ­cias da Cida</span>'}
+          <h1>${esc(displayName)}</h1>
           ${category ? `<a class="mini-category-link" href="${categoryUrl(category.id, category.name)}">${esc(category.name)}</a>` : ''}
           <strong class="price-label big">${esc(priceLabel(product))}</strong>
-          <div class="product-full-description">${descriptionHtml}</div>
+          ${summary ? `<p class="premium-product-summary">${esc(summary)}</p>` : ''}
           <div class="detail-actions">
-            <a class="btn btn-primary" href="${whatsUrl(name)}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a>
-            <a class="btn btn-ghost-dark" href="index.html#cardapio-premium">Ver outras delícias</a>
+            <a class="btn btn-primary" href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp â†’</a>
+            <a class="btn btn-ghost-dark" href="index.html#cardapio-premium">Ver outras delÃ­cias</a>
           </div>
-          <div class="order-note">Valores, disponibilidade, peso, sabores e prazo são confirmados diretamente com a Cida antes do fechamento.</div>
+          <details class="premium-detail-accordion" open>
+            <summary>Detalhes e opÃ§Ãµes do produto</summary>
+            <div class="product-full-description">${descriptionHtml}</div>
+          </details>
+          <div class="order-note">Valores, disponibilidade, peso, sabores e prazo sÃ£o confirmados diretamente com a Cida antes do fechamento.</div>
         </div>
       </div>
+      <div class="premium-mobile-bar"><span>${esc(priceLabel(product))}</span><a href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
     </section>`;
     bindGalleries(page);
-    document.title = `${name} | Delícias da Cida`;
+    document.title = `${name} | DelÃ­cias da Cida`;
   }
   async function initCategoryPage(){
     const page = $('#categoryPage');
