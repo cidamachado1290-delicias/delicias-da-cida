@@ -11,7 +11,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="catalogo-premium.css">
+<link rel="stylesheet" href="catalogo-premium.css"><link rel="stylesheet" href="cida-livros-nav.css">
 <!-- GTM -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],dl=l!='dataLayer'?'&l='+l:'';var j=d.createElement(s);j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)})(window,document,'script','dataLayer','GTM-K358S256');</script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-E81J8073YN"></script>
@@ -23,18 +23,19 @@
 <header class="site-header" id="inicio">
  <a class="brand" href="index.html#inicio" aria-label="Delícias da Cida"><img src="assets/logo.png" alt="Delícias da Cida"></a>
  <div class="header-actions"><a class="header-whats" href="https://wa.me/5567981032677" target="_blank" rel="noopener">WhatsApp</a><button class="nav-toggle" type="button" aria-label="Abrir menu" aria-controls="nav" aria-expanded="false" onclick="toggleMenu()"><span aria-hidden="true">☰</span> Menu</button></div>
- <nav class="nav" id="nav" aria-label="Menu principal"><a href="index.html#inicio">Início</a><a href="catalogo.html">Catálogo completo</a><a href="index.html#cardapio-premium">Mais delícias</a><a href="index.html#cida">Sobre a Cida</a><a href="index.html#avaliacoes">Avaliações</a><a href="index.html#localizacao">Contato</a></nav>
+ <nav class="nav" id="nav" aria-label="Menu principal"><a href="index.html#inicio">Início</a><details class="cida-nav-livros"><summary>Catálogos <span aria-hidden="true">⌄</span></summary><div class="cida-nav-livros-menu"><a href="catalogo.html">Catálogo de produtos<small>Encontre sua delícia</small></a><a href="catalogo-de-bolos.html">Livro de Bolos<small>17 páginas de inspiração</small></a><a href="catalogo-doces-gourmet.html">Livro de Doces Gourmet<small>25 páginas para folhear</small></a></div></details><a href="index.html#cardapio-premium">Mais delícias</a><a href="index.html#cida">Sobre a Cida</a><a href="index.html#avaliacoes">Avaliações</a><a href="index.html#localizacao">Contato</a></nav>
 </header>
 <main class="cida-catalog-page" id="cidaCatalogApp">
  <div class="cida-catalog-hero"><span class="tag">CATÁLOGO DELÍCIAS DA CIDA</span><h1>Encontre a delícia perfeita para cada momento.</h1><p>Bolos, docinhos, sobremesas e criações artesanais feitas com carinho para celebrar, presentear ou adoçar o dia.</p></div>
- <h2 class="cida-catalog-section-title">Explore por categoria</h2>
+ <section class="cida-livros-section" aria-labelledby="cida-livros-title"><div class="cida-livros-intro"><span class="cida-livros-eyebrow">ACERVOS PARA SE INSPIRAR</span><h2 id="cida-livros-title">Nossos Livros de Delícias</h2><p>Folheie os catálogos originais da Cida e encontre inspiração para cada celebração.</p></div><div class="cida-livros-grid"><a class="cida-livros-card" href="catalogo-de-bolos.html"><div class="cida-livros-photo"><img src="assets/acervo-bolos/pagina-01.webp" loading="lazy" alt="Capa original do Livro de Bolos"></div><div class="cida-livros-copy"><span>01 · CONFEITARIA ARTESANAL</span><h3>Livro de Bolos</h3><p>17 páginas com massas, recheios e criações especiais.</p><strong>Folhear livro <span aria-hidden="true">↗</span></strong></div></a><a class="cida-livros-card" href="catalogo-doces-gourmet.html"><div class="cida-livros-photo"><img src="assets/acervo-gourmet/pagina-01.webp" loading="lazy" alt="Capa original do Livro de Doces Gourmet"></div><div class="cida-livros-copy"><span>02 · PEQUENAS DELÍCIAS</span><h3>Livro de Doces Gourmet</h3><p>25 páginas de doces artesanais para momentos especiais.</p><strong>Folhear livro <span aria-hidden="true">↗</span></strong></div></a></div><p class="cida-livros-caption">Acervos de inspiração. Consulte valores e disponibilidade atuais com a Cida.</p></section>
+<h2 class="cida-catalog-section-title">Explore por categoria</h2>
  <div id="cidaCatalogCategoryGrid" class="cida-categories-grid" aria-label="Categorias do catálogo"><p>Carregando categorias...</p></div>
  <h2 class="cida-catalog-section-title">Todas as delícias</h2>
  <div class="cida-catalog-toolbar"><label>Buscar no catálogo<input id="cidaCatalogSearch" type="search" placeholder="Ex.: Bentô Cake, brigadeiro, torta..." autocomplete="off"></label><label>Categoria<select id="cidaCatalogFilter"><option value="all">Todas as categorias</option></select></label><label>Ordenar<select id="cidaCatalogSort"><option value="default">Ordem do catálogo</option><option value="az">Nome: A a Z</option><option value="za">Nome: Z a A</option></select></label></div>
  <p class="cida-catalog-count" id="cidaCatalogCount" role="status" aria-live="polite">Carregando produtos...</p>
  <div id="cidaCatalogProducts" class="cida-catalog-products-grid" aria-label="Produtos do catálogo"></div>
 </main>
-<footer class="footer-premium"><div class="container footer-inner"><img src="assets/logo.png" alt="Delícias da Cida" class="footer-logo"><nav><a href="index.html">Início</a><a href="catalogo.html">Catálogo completo</a><a href="index.html#cida">Sobre a Cida</a><a href="index.html#localizacao">Localização</a></nav><p>Paranaíba-MS · WhatsApp (67) 98103-2677</p><p>© 2026 Delícias da Cida.</p></div></footer>
+<footer class="footer-premium"><div class="container footer-inner"><img src="assets/logo.png" alt="Delícias da Cida" class="footer-logo"><nav><a href="index.html">Início</a><a href="catalogo.html">Catálogo completo</a><a href="catalogo-de-bolos.html">Livro de Bolos</a><a href="catalogo-doces-gourmet.html">Livro de Doces Gourmet</a><a href="index.html#cida">Sobre a Cida</a><a href="index.html#localizacao">Localização</a></nav><p>Paranaíba-MS · WhatsApp (67) 98103-2677</p><p>© 2026 Delícias da Cida.</p></div></footer>
 <script src="supabase-catalog-adapter.js"></script>
 <script src="catalogo-premium.js"></script>
 <script src="script.js"></script>
