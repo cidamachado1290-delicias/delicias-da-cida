@@ -636,3 +636,28 @@ select#pessoas{appearance:auto}
  .catalog-detail-body .premium-mobile-bar a{flex:1;text-align:center;text-decoration:none;padding:13px 10px;background:#1bc969;color:white;border-radius:99px;font-weight:900;font-size:14px}
  .catalog-detail-body .whats-float{display:none}
 }
+
+/* DELICIAS - PRODUTO PREMIUM: descricao compacta - somente pagina de produto */
+.catalog-detail-body .premium-product-page .detail-grid{align-items:start}
+.catalog-detail-body .premium-product-page .detail-copy{align-self:start}
+.catalog-detail-body .premium-product-page .premium-product-summary{margin:3px 0 12px;line-height:1.45;font-size:15px}
+.catalog-detail-body .premium-product-page .premium-size-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0}
+.catalog-detail-body .premium-product-page .premium-size-card{display:grid;grid-template-columns:1fr auto;gap:5px 10px;padding:15px;border-radius:18px;background:#fff4f8;border:1px solid var(--line)}
+.catalog-detail-body .premium-product-page .premium-size-card strong{font-size:15px;color:var(--wine)}
+.catalog-detail-body .premium-product-page .premium-size-card span{font-weight:900;color:var(--pink2);font-size:15px;white-space:nowrap}
+.catalog-detail-body .premium-product-page .premium-size-card small{grid-column:1/-1;font-size:13px;line-height:1.35;color:var(--muted)}
+.catalog-detail-body .premium-product-page .premium-detail-accordion{margin:12px 0;background:#fffafb}
+.catalog-detail-body .premium-product-page .premium-detail-accordion>summary{padding:14px 18px;min-height:50px}
+.catalog-detail-body .premium-product-page .premium-detail-accordion[open]>summary::after{content:'\2212'}
+.catalog-detail-body .premium-product-page .product-full-description{padding:4px 18px 18px;white-space:normal!important;display:block!important;line-height:1.45}
+.catalog-detail-body .premium-product-page .product-full-description p{white-space:normal!important;margin:0 0 7px!important;font-size:15px!important;line-height:1.5!important}
+.catalog-detail-body .premium-product-page .product-full-description h3{font-size:18px!important;margin:15px 0 7px!important}
+.catalog-detail-body .premium-product-page .product-detail-accent{font-weight:650;color:var(--wine)!important}
+.catalog-detail-body .premium-product-page .detail-actions{margin:14px 0;gap:10px}
+.catalog-detail-body .premium-product-page .order-note{margin-top:12px}
+@media(max-width:680px){
+ .catalog-detail-body .premium-product-page .premium-size-cards{grid-template-columns:1fr;gap:8px}
+ .catalog-detail-body .premium-product-page .premium-size-card{padding:12px 14px}
+ .catalog-detail-body .premium-product-page .premium-product-summary{font-size:14px}
+ .catalog-detail-body .premium-product-page .product-full-description{padding:4px 14px 14px}
+}

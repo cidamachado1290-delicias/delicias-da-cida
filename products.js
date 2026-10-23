@@ -266,7 +266,7 @@
     return `<div class="detail-gallery" data-gallery>
       <div class="detail-media">
         <img data-main-image src="${esc(imgs[0].src)}" alt="${esc(imgs[0].alt || name)}" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')">
-        ${imgs.length > 1 ? `<button type="button" class="gallery-arrow gallery-prev" data-gallery-prev aria-label="Foto anterior">&#10094;</button><button type="button" class="gallery-arrow gallery-next" data-gallery-next aria-label="PrÃ³xima foto">&#10095;</button><span class="gallery-count" data-gallery-count>1/${imgs.length}</span>` : ''}
+        ${imgs.length > 1 ? `<button type="button" class="gallery-arrow gallery-prev" data-gallery-prev aria-label="Foto anterior">&#10094;</button><button type="button" class="gallery-arrow gallery-next" data-gallery-next aria-label="Pr&#243;xima foto">&#10095;</button><span class="gallery-count" data-gallery-count>1/${imgs.length}</span>` : ''}
       </div>
       ${imgs.length > 1 ? `<div class="gallery-thumbs" aria-label="Fotos do produto">${imgs.map((img, index) => `<button type="button" class="gallery-thumb ${index === 0 ? 'active' : ''}" data-gallery-thumb="${index}" data-src="${esc(img.src)}" data-alt="${esc(img.alt || name)}" aria-label="Exibir foto ${index + 1}" aria-pressed="${index === 0}"><img src="${esc(img.src)}" alt="${esc(img.alt || name)}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')"></button>`).join('')}</div>` : ''}
     </div>`;
@@ -300,18 +300,39 @@
     });
   }
   function premiumDescription(raw){
-    const clean = safeHtml(raw || '<p>Consulte disponibilidade, valores e prazo de encomenda pelo WhatsApp.</p>');
+    const clean = safeHtml(raw || 'Consulte valores e disponibilidade pelo WhatsApp.');
     const wrapper = document.createElement('div');
     wrapper.innerHTML = clean;
-    const walker = document.createTreeWalker(wrapper, NodeFilter.SHOW_TEXT);
-    const nodes = [];
-    while(walker.nextNode()) nodes.push(walker.currentNode);
-    nodes.forEach(node => {
-      // Treat literal backslash+n imported from the legacy catalog, without changing product data.
-      const normalized = node.nodeValue.replace(/\\r\\n|\\n|\\r/g, '\n');
-      if(normalized !== node.nodeValue) node.nodeValue = normalized;
-    });
-    return wrapper.innerHTML;
+    const htmlWithBreaks = wrapper.innerHTML.replace(/<br\s*\/?\s*>/gi, '\n')
+      .replace(/<\/(?:p|div|h[2-5]|li|ul|ol)>/gi, '\n');
+    const text = strip(htmlWithBreaks)
+      .replace(/\\r\\n|\\n|\\r/g, '\n')
+      .replace(/\r\n?/g, '\n')
+      .replace(/\u00a0/g, ' ');
+    const lines = text.split(/\n+/).map(s => s.replace(/\s+/g, ' ').trim())
+      .filter(Boolean).filter((s, i, arr) => i === 0 || s !== arr[i - 1]);
+    // Preserve the original details but remove imported blank lines and duplicated adjacent text.
+    return lines.map(line => {
+      const heading = /^(?:\d+\)\s*)?(?:Mini|Mega) Bent[o\u00f4] Cake\b/i.test(line);
+      const special = /^(?:Escolha:|Opcionais:|Massa:|Recheio:|Tamanho:|Ingredientes:)/i.test(line);
+      return heading ? `<h3>${esc(line)}</h3>` :
+        special ? `<p class="product-detail-accent">${esc(line)}</p>` : `<p>${esc(line)}</p>`;
+    }).join('');
+  }
+  function premiumSnippet(raw, priceText){
+    const clean = String(raw || '').replace(/\\r\\n|\\n|\\r/g, ' ').replace(/\s+/g, ' ').trim();
+    const text = strip(safeHtml(clean)).trim();
+    if(!text || text.toLowerCase() === String(priceText || '').toLowerCase()) return '';
+    if(/^\s*(?:de|a partir de|por apenas)?\s*r\$\s*[\d.,]+\s*(?:a\s*r\$\s*[\d.,]+)?\s*$/i.test(text)) return '';
+    return text.slice(0, 165);
+  }
+  function premiumHighlights(product){
+    const text = strip(product.description || '').replace(/\\r\\n|\\n|\\r/g, ' ').replace(/\s+/g, ' ');
+    if(Number(product.id) !== 2739 || !/Mini Bent[o\u00f4] Cake/i.test(text) || !/Mega Bent[o\u00f4] Cake/i.test(text)) return '';
+    return `<div class="premium-size-cards" aria-label="Tamanhos do Bent\u00f4 Cake">
+      <div class="premium-size-card"><strong>Mini Bent\u00f4 Cake</strong><span>R$ 49,90</span><small>Aprox. 600 g \u00b7 Serve 4 a 5 pessoas</small></div>
+      <div class="premium-size-card"><strong>Mega Bent\u00f4 Cake</strong><span>R$ 84,90</span><small>Aprox. 1 kg \u00b7 Serve 9 a 10 pessoas</small></div>
+    </div>`;
   }
   function productUrl(id){ return `produto.html?id=${encodeURIComponent(id)}`; }
   function categoryUrl(id, name){ return `categoria.html?id=${encodeURIComponent(id)}${name ? `&nome=${encodeURIComponent(name)}` : ''}`; }
@@ -426,37 +447,38 @@
   }
   function renderProductPage(product){
     const page = $('#productPage');
-    const name = product.name || 'Produto do catÃ¡logo';
+    const name = product.name || 'Produto do cat\u00e1logo';
     const displayName = name.replace(/^\s*\d+\)\s*/, '');
+    const price = priceLabel(product);
     const descriptionHtml = premiumDescription(product.description || product.short_description || '');
     const category = product.categories && product.categories[0] ? product.categories[0] : null;
-    const summary = strip(product.short_description || '').replace(/\\r\\n|\\n|\\r/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 190);
+    const summary = premiumSnippet(product.short_description || '', price);
     const orderHref = whatsUrl(name);
     page.innerHTML = `<section class="detail-hero premium-product-page">
-      <a class="back-link" href="index.html#cardapio-premium">â† Voltar ao cardÃ¡pio</a>
+      <a class="back-link" href="index.html#cardapio-premium">\u2190 Voltar ao card\u00e1pio</a>
       <div class="detail-grid">
         ${productGallery(product)}
         <div class="detail-copy">
-          ${category ? `<span class="tag">${esc(category.name)}</span>` : '<span class="tag">DelÃ­cias da Cida</span>'}
+          ${category ? `<span class="tag">${esc(category.name)}</span>` : '<span class="tag">Del\u00edcias da Cida</span>'}
           <h1>${esc(displayName)}</h1>
           ${category ? `<a class="mini-category-link" href="${categoryUrl(category.id, category.name)}">${esc(category.name)}</a>` : ''}
-          <strong class="price-label big">${esc(priceLabel(product))}</strong>
+          <strong class="price-label big">${esc(price)}</strong>
           ${summary ? `<p class="premium-product-summary">${esc(summary)}</p>` : ''}
+          ${premiumHighlights(product)}
           <div class="detail-actions">
-            <a class="btn btn-primary" href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp â†’</a>
-            <a class="btn btn-ghost-dark" href="index.html#cardapio-premium">Ver outras delÃ­cias</a>
+            <a class="btn btn-primary" href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp \u2192</a>
+            <a class="btn btn-ghost-dark" href="index.html#cardapio-premium">Ver outras del\u00edcias</a>
           </div>
-          <details class="premium-detail-accordion" open>
-            <summary>Detalhes e opÃ§Ãµes do produto</summary>
+          <details class="premium-detail-accordion">
+            <summary>Ver todos os detalhes e op\u00e7\u00f5es</summary>
             <div class="product-full-description">${descriptionHtml}</div>
           </details>
-          <div class="order-note">Valores, disponibilidade, peso, sabores e prazo sÃ£o confirmados diretamente com a Cida antes do fechamento.</div>
+          <div class="order-note">Valores, disponibilidade, peso, sabores e prazo s\u00e3o confirmados diretamente com a Cida antes do fechamento.</div>
         </div>
       </div>
-      <div class="premium-mobile-bar"><span>${esc(priceLabel(product))}</span><a href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a></div>
     </section>`;
     bindGalleries(page);
-    document.title = `${name} | DelÃ­cias da Cida`;
+    document.title = `${displayName} | Del\u00edcias da Cida`;
   }
   async function initCategoryPage(){
     const page = $('#categoryPage');
