@@ -1,0 +1,38 @@
+/* CIDA CATALOGO PREMIUM 29 - escopo isolado */
+.cida-home-categories{margin:36px 0 10px;padding:30px;border:1px solid #f4cada;background:linear-gradient(125deg,#fffafd,#fff3f7);border-radius:30px}
+.cida-home-categories-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:20px}
+.cida-home-categories h3{font-family:'Playfair Display',serif;color:#4d1e2a;font-size:clamp(30px,3.3vw,47px);line-height:1.12;margin:8px 0}
+.cida-home-categories p{color:#765b65;line-height:1.5;margin:0}
+.cida-home-categories-link{display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;background:linear-gradient(100deg,#ee4b83,#bd2f62);color:#fff;text-decoration:none;padding:15px 20px;border-radius:99px;font-weight:800}
+.cida-categories-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.cida-category-tile{min-width:0;border-radius:23px;overflow:hidden;display:block;background:#fff;border:1px solid #f4cada;text-decoration:none;box-shadow:0 10px 26px rgba(96,38,60,.08);transition:transform .2s,box-shadow .2s}
+.cida-category-tile:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(96,38,60,.14)}
+.cida-category-cover{display:block;aspect-ratio:1.5;overflow:hidden;background:#fff4f8}
+.cida-category-cover img{height:100%;width:100%;object-fit:cover;display:block;transition:transform .3s}
+.cida-category-tile:hover img{transform:scale(1.04)}
+.cida-category-bottom{padding:15px 17px 17px;display:flex;flex-direction:column;gap:5px}
+.cida-category-bottom strong{color:#4d1e2a;font-size:18px}
+.cida-category-bottom small{color:#bd2f62;font-size:13px;font-weight:700}
+.cida-catalog-page{width:min(1340px,94%);margin:0 auto;padding:40px 0 86px}
+.cida-catalog-hero{text-align:center;padding:40px 15px 28px}
+.cida-catalog-hero h1{font-family:'Playfair Display',serif;color:#4d1e2a;font-size:clamp(39px,5.6vw,70px);line-height:1.08;margin:15px auto;max-width:900px}
+.cida-catalog-hero p{max-width:720px;margin:auto;color:#765b65;font-size:18px;line-height:1.6}
+.cida-catalog-section-title{font-family:'Playfair Display',serif;color:#4d1e2a;font-size:clamp(28px,3.5vw,40px);margin:30px 0 16px}
+.cida-catalog-toolbar{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(0,1fr) minmax(0,.75fr);gap:12px;align-items:end;margin:30px 0 10px}
+.cida-catalog-toolbar label{font-size:13px;font-weight:800;color:#4d1e2a;gap:8px}
+.cida-catalog-toolbar input,.cida-catalog-toolbar select{height:52px;font-size:15px;border-radius:14px;min-width:0}
+.cida-catalog-count{font-size:14px;color:#765b65;margin:12px 0 18px}
+.cida-catalog-products-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+.cida-catalog-product{display:flex;min-width:0;flex-direction:column;overflow:hidden;text-decoration:none;border:1px solid #f4cada;border-radius:22px;background:#fff;box-shadow:0 10px 28px rgba(96,38,60,.06)}
+.cida-catalog-product-img{aspect-ratio:1;display:block;overflow:hidden;background:#fff4f8}
+.cida-catalog-product-img img{display:block;width:100%;height:100%;object-fit:contain}
+.cida-catalog-product-copy{display:flex;flex:1;flex-direction:column;padding:17px;gap:8px;color:#765b65;font-size:13px;line-height:1.5}
+.cida-catalog-product-copy strong{font-size:17px;line-height:1.28;color:#4d1e2a}
+.cida-catalog-product-copy>span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cida-catalog-product-copy b{margin-top:auto;color:#bd2f62;font-size:16px}
+.cida-catalog-product-copy em{font-style:normal;font-weight:800;color:#bd2f62}
+.cida-catalog-empty{grid-column:1/-1;text-align:center;padding:40px;background:#fff9fc;border:1px solid #f4cada;border-radius:22px}
+.cida-catalog-empty button{background:#bd2f62;color:white;border:0;padding:13px 22px;border-radius:99px;cursor:pointer}
+@media(max-width:1000px){.cida-catalog-products-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:760px){.cida-home-categories{padding:20px 15px}.cida-home-categories-head{flex-direction:column;align-items:stretch}.cida-home-categories-link{width:100%}.cida-categories-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.cida-category-bottom{padding:11px}.cida-category-bottom strong{font-size:15px}.cida-category-bottom small{font-size:11px}.cida-catalog-toolbar{grid-template-columns:1fr 1fr}.cida-catalog-toolbar label:first-child{grid-column:1/-1}.cida-catalog-products-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.cida-catalog-product-copy{padding:12px}.cida-catalog-product-copy strong{font-size:15px}.cida-catalog-page{padding-top:16px}.cida-catalog-hero{padding:24px 0}.cida-catalog-hero p{font-size:16px}}
+@media(max-width:390px){.cida-catalog-products-grid{grid-template-columns:1fr 1fr}.cida-category-cover{aspect-ratio:1.25}.cida-catalog-toolbar{grid-template-columns:1fr}.cida-catalog-toolbar label:first-child{grid-column:auto}}
