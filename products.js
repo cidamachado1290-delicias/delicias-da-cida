@@ -717,6 +717,7 @@
   }
 
   async function initHome(){
+    const wrap = document.getElementById('homeProductGroups');
     const status = $('#catalogStatus');
     const categories = await fetchCategories();
     await renderHomeProducts(null, categories);
