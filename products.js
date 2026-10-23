@@ -469,7 +469,7 @@
     const summary = premiumSnippet(product.short_description || '', price);
     const orderHref = whatsUrl(name);
     page.innerHTML = `<section class="detail-hero premium-product-page">
-      <a class="back-link" href="index.html#cardapio-premium">\u2190 Voltar ao card\u00e1pio</a>
+      <a class="back-link" href="catalogo.html">\u2190 Voltar ao card\u00e1pio</a>
       <div class="detail-grid">
         ${productGallery(product)}
         <div class="detail-copy">
@@ -481,7 +481,7 @@
           ${premiumHighlights(product)}
           <div class="detail-actions">
             <a class="btn btn-primary" href="${orderHref}" target="_blank" rel="noopener">Pedir pelo WhatsApp \u2192</a>
-            <a class="btn btn-ghost-dark" href="index.html#cardapio-premium">Ver outras del\u00edcias</a>
+            <a class="btn btn-ghost-dark" href="catalogo.html">Ver outras del\u00edcias</a>
           </div>
           <details class="premium-detail-accordion">
             <summary>Ver todos os detalhes e op\u00e7\u00f5es</summary>
@@ -515,7 +515,7 @@
     const page = $('#categoryPage');
     const name = category.name || 'Categoria';
     page.innerHTML = `<section class="category-page-head">
-      <a class="back-link" href="index.html#cardapio-premium">← Voltar ao cardápio</a>
+      <a class="back-link" href="catalogo.html">← Voltar ao cardápio</a>
       <span class="tag">Categoria</span>
       <h1>${esc(name)}</h1>
       <p>Veja as opções desta categoria e consulte disponibilidade, valores e prazo pelo WhatsApp.</p>
