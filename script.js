@@ -432,7 +432,7 @@ document.getElementById('bentoFunForm')?.addEventListener('submit',async (e)=>{
   if(loading) loading.classList.add('hidden');
   const msg=`Olá, Cida! Vim pelo site e quero pedir um Bentô Cake.
 
-🎂 Meu pedido:
+\u{1F382} Meu pedido:
 • Frase: ${c.phrase}
 • Tamanho indicado: ${c.kind}
 • Massa: ${v('bentoMassa')}
