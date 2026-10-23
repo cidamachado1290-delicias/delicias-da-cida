@@ -683,3 +683,29 @@ select#pessoas{appearance:auto}
 .catalog-section-doces-gourmet .cida-gourmet-buttons .btn{padding:15px 22px;text-align:center}
 @media(max-width:820px){.catalog-section-doces-gourmet .cida-gourmet-showcase{grid-template-columns:minmax(0,1fr)}.catalog-section-doces-gourmet .cida-gourmet-info h4{font-size:clamp(28px,6vw,40px)}}
 @media(max-width:540px){.catalog-section-doces-gourmet .cida-gourmet-showcase{padding:15px;border-radius:23px;gap:19px}.catalog-section-doces-gourmet .cida-gourmet-main{border-radius:17px}.catalog-section-doces-gourmet .cida-gourmet-photo{flex-basis:62px;width:62px;height:62px}.catalog-section-doces-gourmet .cida-gourmet-buttons{flex-direction:column}.catalog-section-doces-gourmet .cida-gourmet-buttons .btn{width:100%}}
+
+/* PACOTE 23 - HISTORIA DA CIDA: escopo restrito a secao institucional */
+.cida-story-premium .main-cida-photo{height:auto!important;max-height:none!important;object-fit:contain!important;object-position:center center!important}
+.cida-story-premium .cida-highlight-panel{min-width:0}
+.cida-story-premium .cida-highlight-head h3{font-size:clamp(27px,2.5vw,37px);line-height:1.12;overflow-wrap:normal}
+.cida-story-premium .cida-highlight-head p{font-size:15px;line-height:1.65;max-width:59ch}
+.cida-story-premium .cida-premium-gallery{display:grid;grid-template-columns:minmax(0,1.1fr) repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(190px,1fr));gap:12px;align-items:stretch}
+.cida-story-premium .cida-premium-card{min-width:0;min-height:0;max-width:100%;isolation:isolate}
+.cida-story-premium .cida-premium-card-featured{grid-column:1;grid-row:1 / span 2;min-height:392px}
+.cida-story-premium .cida-premium-card:last-child{grid-column:2 / span 2;grid-row:2}
+.cida-story-premium .cida-premium-card img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;object-position:center center}
+.cida-story-premium .cida-premium-overlay{padding:17px;min-width:0}
+.cida-story-premium .cida-premium-overlay.compact{padding:13px}
+.cida-story-premium .cida-premium-overlay h4{font-size:clamp(18px,1.5vw,25px);line-height:1.12;overflow-wrap:normal;word-break:normal;hyphens:auto;text-wrap:balance;margin:0}
+.cida-story-premium .cida-premium-card-featured .cida-premium-overlay h4{font-size:clamp(22px,2vw,30px)}
+.cida-story-premium .cida-premium-kicker{font-size:10px;line-height:1.1;padding:6px 8px;margin-bottom:8px;letter-spacing:.02em;max-width:100%;white-space:normal}
+@media(max-width:1050px){.cida-story-premium .cida-premium-gallery{grid-template-rows:repeat(2,minmax(180px,1fr))}}
+@media(max-width:680px){
+ .cida-story-premium .cida-premium-gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:10px}
+ .cida-story-premium .cida-premium-card-featured{grid-column:1 / -1;grid-row:auto;min-height:300px;aspect-ratio:4/3}
+ .cida-story-premium .cida-premium-card:not(.cida-premium-card-featured){grid-column:auto;grid-row:auto;min-height:180px;aspect-ratio:4/5}
+ .cida-story-premium .cida-premium-card:last-child{grid-column:1 / -1;aspect-ratio:2/1;min-height:170px}
+ .cida-story-premium .cida-premium-overlay.compact{padding:12px}
+ .cida-story-premium .cida-premium-overlay h4{font-size:clamp(16px,4vw,20px)}
+ .cida-story-premium .cida-highlight-head h3{font-size:clamp(26px,7vw,34px)}
+}
