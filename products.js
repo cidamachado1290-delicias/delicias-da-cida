@@ -342,7 +342,7 @@
   }
   function productCard(product){
     const id = product.id;
-    const name = product.name || REAL_PRODUCTS[id]?.name || 'Delícia artesanal';
+    const name = String(product.name || REAL_PRODUCTS[id]?.name || 'Delícia artesanal').replace(/^\s*\d+\)\s*/, '').trim();
     const img = imageOf(product);
     const short = strip(product.short_description || product.description || '').slice(0, 150);
     return `<article class="product-card" data-product-id="${esc(String(id))}" onclick="window.location.href='${productUrl(id)}'" tabindex="0" role="link" aria-label="Abrir ${esc(name)}">
