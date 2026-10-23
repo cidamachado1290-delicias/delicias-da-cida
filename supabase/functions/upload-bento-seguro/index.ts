@@ -80,11 +80,11 @@ async function readLimited(req: Request): Promise<Uint8Array | null> {
 }
 
 serve(async (req: Request) => {
-  const allowedOrigin = Deno.env.get("BENTO_ALLOWED_ORIGIN") || "";
+  const allowedOrigins = (Deno.env.get("BENTO_ALLOWED_ORIGIN") || "").split(",").map(s => s.trim()).filter(Boolean);
   const requestOrigin = req.headers.get("origin") || "";
 
   const corsOrigin =
-    allowedOrigin && requestOrigin === allowedOrigin
+    allowedOrigins.includes(requestOrigin)
       ? requestOrigin
       : "";
 
@@ -191,7 +191,7 @@ serve(async (req: Request) => {
 
     if (
       result.success !== true ||
-      result.hostname !== new URL(allowedOrigin).hostname
+      !allowedOrigins.some(origin => new URL(origin).hostname === result.hostname)
     ) {
       return json({ error: "Verificacao recusada" }, 403, corsOrigin);
     }

@@ -11,6 +11,6 @@ window.SUPABASE_BENTO_CONFIG = {
 // Opcional: se algum dia preferir Edge Function, preencha este endpoint.
 // Se ficar vazio, o site usa upload direto no Supabase Storage acima.
 window.BENTO_UPLOAD_ENDPOINT =
-  window.location.hostname === "staging.delicias-da-cida.pages.dev"
+  ["staging.delicias-da-cida.pages.dev", "delicias-da-cida.pages.dev"].includes(window.location.hostname)
     ? "https://impkkhztouayqhzwsaog.supabase.co/functions/v1/upload-bento-seguro"
     : "";
