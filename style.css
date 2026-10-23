@@ -661,3 +661,25 @@ select#pessoas{appearance:auto}
  .catalog-detail-body .premium-product-page .premium-product-summary{font-size:14px}
  .catalog-detail-body .premium-product-page .product-full-description{padding:4px 14px 14px}
 }
+/* PACOTE 22: vitrine unica de Doces Gourmet na pagina inicial */
+.catalog-section-doces-gourmet .cida-gourmet-showcase{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:clamp(22px,3vw,44px);padding:clamp(18px,2.5vw,32px);border:1px solid #f3cad9;border-radius:30px;background:linear-gradient(135deg,#fff 48%,#fff6fa);box-shadow:0 15px 38px rgba(86,35,54,.07)}
+.catalog-section-doces-gourmet .cida-gourmet-visual{min-width:0}
+.catalog-section-doces-gourmet .cida-gourmet-main{width:100%;aspect-ratio:1/1;border-radius:24px;overflow:hidden;background:#fff0f5}
+.catalog-section-doces-gourmet .cida-gourmet-main img{display:block;width:100%;height:100%;object-fit:cover}
+.catalog-section-doces-gourmet .cida-gourmet-photo-strip{display:flex;gap:9px;overflow-x:auto;padding:12px 2px 3px;scrollbar-width:thin}
+.catalog-section-doces-gourmet .cida-gourmet-photo{flex:0 0 72px;width:72px;height:72px;overflow:hidden;padding:0;background:#fff;border:2px solid transparent;border-radius:14px;cursor:pointer;opacity:.8}
+.catalog-section-doces-gourmet .cida-gourmet-photo.is-active{border-color:#d32b68;opacity:1}
+.catalog-section-doces-gourmet .cida-gourmet-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.catalog-section-doces-gourmet .cida-gourmet-info{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:15px}
+.catalog-section-doces-gourmet .cida-gourmet-label{font-size:12px;letter-spacing:.12em;font-weight:900;color:#ae6818}
+.catalog-section-doces-gourmet .cida-gourmet-info h4{font-family:'Playfair Display',serif;color:var(--wine);font-size:clamp(29px,3vw,48px);line-height:1.12;margin:0}
+.catalog-section-doces-gourmet .cida-gourmet-info p{font-size:16px;line-height:1.6;color:var(--muted);margin:0}
+.catalog-section-doces-gourmet .cida-gourmet-varieties{display:flex;flex-wrap:wrap;gap:9px}
+.catalog-section-doces-gourmet .cida-gourmet-varieties span{padding:9px 13px;border-radius:99px;color:var(--wine);background:#fff0f5;border:1px solid #f8d6e2;font-size:13px;font-weight:800}
+.catalog-section-doces-gourmet .cida-gourmet-note{display:grid;gap:5px;padding:15px 17px;border-radius:16px;background:#fff1f5;color:var(--wine);line-height:1.5;width:100%}
+.catalog-section-doces-gourmet .cida-gourmet-note strong{font-size:14px}
+.catalog-section-doces-gourmet .cida-gourmet-note span{font-size:14px;color:var(--muted)}
+.catalog-section-doces-gourmet .cida-gourmet-buttons{display:flex;gap:11px;flex-wrap:wrap;width:100%}
+.catalog-section-doces-gourmet .cida-gourmet-buttons .btn{padding:15px 22px;text-align:center}
+@media(max-width:820px){.catalog-section-doces-gourmet .cida-gourmet-showcase{grid-template-columns:minmax(0,1fr)}.catalog-section-doces-gourmet .cida-gourmet-info h4{font-size:clamp(28px,6vw,40px)}}
+@media(max-width:540px){.catalog-section-doces-gourmet .cida-gourmet-showcase{padding:15px;border-radius:23px;gap:19px}.catalog-section-doces-gourmet .cida-gourmet-main{border-radius:17px}.catalog-section-doces-gourmet .cida-gourmet-photo{flex-basis:62px;width:62px;height:62px}.catalog-section-doces-gourmet .cida-gourmet-buttons{flex-direction:column}.catalog-section-doces-gourmet .cida-gourmet-buttons .btn{width:100%}}

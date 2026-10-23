@@ -430,6 +430,20 @@
     const [productMap, categories] = await Promise.all([fetchHomeProducts(), fetchCategories()]);
     renderHomeProducts(productMap);
     renderHomeCategories(categories);
+    wrap.addEventListener('click', event => {
+      const button = event.target.closest('[data-gourmet-photo]');
+      if(!button || !wrap.contains(button)) return;
+      const section = button.closest('.cida-gourmet-showcase');
+      const main = section && section.querySelector('[data-gourmet-main]');
+      if(!main) return;
+      main.src = button.dataset.src || main.src;
+      main.alt = button.dataset.alt || main.alt;
+      section.querySelectorAll('[data-gourmet-photo]').forEach(item => {
+        const active = item === button;
+        item.classList.toggle('is-active',active);
+        item.setAttribute('aria-pressed',String(active));
+      });
+    }, {once:false});
     if(status) status.innerHTML = '<span>✓</span> Delícias carregadas. Toque em uma opção para ver detalhes ou pedir pelo WhatsApp.';
   }
   async function initProductPage(){
@@ -634,31 +648,29 @@
 
 
   function renderDocesGourmetHighlight(product){
-    const imgs = imagesOf(product).slice(0,3);
-    const main = imgs[0] || { src: 'assets/logo.png', alt: product.name || 'Docinhos Gourmet' };
-    const msg = 'Olá, Cida! Vim pelo site da Delícias da Cida e quero ver sabores, fotos e valores dos Docinhos Gourmet.';
-    return `<aside class="doces-gourmet-highlight">
-      <div class="doces-gourmet-highlight-media">
-        <img src="${esc(main.src)}" alt="${esc(main.alt || 'Docinhos Gourmet Delícias da Cida')}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')">
+    const images = imagesOf(product);
+    const main = images[0] || {src:'assets/logo.png', alt:'Doces Gourmet'};
+    const msg = 'Ol\u00e1, Cida! Quero conhecer os sabores, fotos, valores e disponibilidade dos Doces Gourmet.';
+    const contact = `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`;
+    const items = images.slice(0,8);
+    const photos = items.length > 1 ? `<div class="cida-gourmet-photo-strip" aria-label="Galeria de doces gourmet">${items.map((img,index)=>`<button type="button" class="cida-gourmet-photo ${index === 0 ? 'is-active' : ''}" data-gourmet-photo data-src="${esc(img.src)}" data-alt="${esc(img.alt || 'Doces Gourmet')}" aria-label="Ver foto ${index + 1}" aria-pressed="${index === 0}"><img src="${esc(img.src)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png'"></button>`).join('')}</div>` : '';
+    return `<article class="cida-gourmet-showcase">
+      <div class="cida-gourmet-visual">
+        <div class="cida-gourmet-main"><img data-gourmet-main src="${esc(main.src)}" alt="${esc(main.alt || 'Doces Gourmet da Cida')}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png'"></div>
+        ${photos}
       </div>
-      <div class="doces-gourmet-highlight-copy">
-        <span class="tag">Opções clássicas</span>
-        <h4>Brigadeiro • Beijinho • Casadinho • Brigadeiro Bicho de Pé</h4>
-        <p>Ideal para festas, aniversários, casamentos e momentos especiais. Agora a seção voltou com imagem destacada e uma leitura mais organizada.</p>
-        <ul class="doces-gourmet-bullets">
-          <li><strong>Referência:</strong> R$125,00 / 100 unidades.</li>
-          <li><strong>Atendimento direto:</strong> consulte sabores, disponibilidade e prazo com a Cida.</li>
-          <li><strong>Catálogo visual:</strong> veja mais fotos e combinações pelo WhatsApp.</li>
-        </ul>
-        ${imgs.length > 1 ? `<div class="doces-gourmet-thumbs">${imgs.slice(1).map(img => `<img src="${esc(img.src)}" alt="${esc(img.alt || 'Variação de Docinhos Gourmet')}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')">`).join('')}</div>` : ''}
-        <div class="doces-gourmet-actions">
-          <a class="btn btn-primary" href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">Falar com a Cida</a>
-          <a class="btn btn-ghost-dark" href="produto.html?id=${encodeURIComponent(product.id)}">Ver detalhes</a>
+      <div class="cida-gourmet-info">
+        <span class="cida-gourmet-label">FEITOS COM CARINHO</span>
+        <h4>Doces Gourmet para momentos especiais</h4>
+        <p>Artesanais e preparados para deixar sua comemora\u00e7\u00e3o ainda mais doce. Consulte as op\u00e7\u00f5es e monte sua encomenda com a Cida.</p>
+        <div class="cida-gourmet-varieties" aria-label="Sabores cl\u00e1ssicos">
+          <span>Brigadeiro</span><span>Beijinho</span><span>Casadinho</span><span>Bicho de P\u00e9</span>
         </div>
+        <div class="cida-gourmet-note"><strong>Valores e encomendas</strong><span>Consulte pre\u00e7os, quantidades, sabores e disponibilidade diretamente com a Cida.</span></div>
+        <div class="cida-gourmet-buttons"><a class="btn btn-primary" href="${contact}" target="_blank" rel="noopener">Pedir pelo WhatsApp</a><a class="btn btn-ghost-dark" href="${productUrl(product.id)}">Ver detalhes</a></div>
       </div>
-    </aside>`;
+    </article>`;
   }
-
   function sectionProductCard(product, section){
     const card = productCard(product);
     if(/chocotones|pascoa|páscoa|sazonais/i.test(section.key + ' ' + section.title)){
@@ -680,7 +692,7 @@
       const products = await fetchProductsForFlowSection(section, categories);
       let sectionContent = products.length ? `<div class="product-grid">${products.map(product => sectionProductCard(product, section)).join('')}</div>` : `<div class="catalog-empty mini"><h2>${esc(section.title)}</h2><p>Essa categoria está preparada para puxar produtos do site oficial. Se não carregar localmente, consulte a Cida pelo WhatsApp.</p><a class="btn btn-primary" href="https://wa.me/${WHATSAPP}" target="_blank" rel="noopener">Falar com a Cida</a></div>`;
       if(section.key === 'doces-gourmet' && products.length){
-        sectionContent = `<div class="doces-gourmet-layout">${sectionProductCard(products[0], section)}${renderDocesGourmetHighlight(products[0])}</div>`;
+        sectionContent = renderDocesGourmetHighlight(products[0]);
       }
       blocks.push(`<section class="catalog-group catalog-section-${esc(section.key)}">
         <div class="catalog-group-head">
@@ -709,6 +721,20 @@
     const categories = await fetchCategories();
     await renderHomeProducts(null, categories);
     renderHomeCategories(categories);
+    wrap.addEventListener('click', event => {
+      const button = event.target.closest('[data-gourmet-photo]');
+      if(!button || !wrap.contains(button)) return;
+      const section = button.closest('.cida-gourmet-showcase');
+      const main = section && section.querySelector('[data-gourmet-main]');
+      if(!main) return;
+      main.src = button.dataset.src || main.src;
+      main.alt = button.dataset.alt || main.alt;
+      section.querySelectorAll('[data-gourmet-photo]').forEach(item => {
+        const active = item === button;
+        item.classList.toggle('is-active',active);
+        item.setAttribute('aria-pressed',String(active));
+      });
+    }, {once:false});
     if(status) status.innerHTML = '<span>✓</span> Catálogo premium carregado com produtos, galerias e categorias do site oficial.';
   }
 
