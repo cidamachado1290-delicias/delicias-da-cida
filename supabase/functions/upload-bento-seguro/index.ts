@@ -203,6 +203,40 @@ serve(async (req: Request) => {
       }
     });
 
+    // Rate limit: executado apos validar o Turnstile,
+    // antes de gravar o arquivo no Storage.
+    const forwarded = req.headers.get("x-forwarded-for") || "";
+    const clientIp = forwarded.split(",")[0].trim() || "unknown";
+
+    const digest = await crypto.subtle.digest(
+      "SHA-256",
+      new TextEncoder().encode(`${secret}:${clientIp}`)
+    );
+
+    const clientHash = Array.from(new Uint8Array(digest))
+      .map(b => b.toString(16).padStart(2, "0"))
+      .join("");
+
+    const { data: permitted, error: rateError } = await supabase.rpc(
+      "bento_upload_rate_allow",
+      { p_client_hash: clientHash }
+    );
+
+    if (rateError) {
+      return json(
+        { error: "Controle de seguranca indisponivel" },
+        503,
+        corsOrigin
+      );
+    }
+
+    if (permitted !== true) {
+      return json(
+        { error: "Limite de envios atingido. Tente novamente mais tarde." },
+        429,
+        corsOrigin
+      );
+    }
     const { data: bucket, error: bucketError } =
       await supabase.storage.getBucket(BUCKET);
 
