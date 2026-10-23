@@ -1,0 +1,2 @@
+[functions.upload-bento-seguro]
+verify_jwt = false

@@ -316,30 +316,101 @@ function safeFileName(name){
   const base=(name||'referencia-bento').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9._-]+/g,'-').replace(/-+/g,'-').replace(/^-|-$/g,'');
   return base || 'referencia-bento.jpg';
 }
+const BENTO_TURNSTILE_SITEKEY = '0x4AAAAAAFhnUuIMHAYBqJwg';
+let bentoTurnstileWidgetId = null;
+let bentoTurnstileToken = '';
+
+function prepareBentoTurnstile(){
+  const area = document.getElementById('bentoTurnstileArea');
+  const file = document.getElementById('bentoUpload')?.files?.[0];
+
+  if(!area) return;
+
+  area.hidden = !file || !window.BENTO_UPLOAD_ENDPOINT;
+  if(!file || !window.BENTO_UPLOAD_ENDPOINT){
+    bentoTurnstileToken = '';
+    if(bentoTurnstileWidgetId !== null && window.turnstile){
+      window.turnstile.reset(bentoTurnstileWidgetId);
+    }
+    return;
+  }
+
+  if(!window.turnstile || bentoTurnstileWidgetId !== null) return;
+
+  bentoTurnstileWidgetId = window.turnstile.render(
+    '#bentoTurnstileWidget',
+    {
+      sitekey: BENTO_TURNSTILE_SITEKEY,
+      theme: 'light',
+      callback: token => {
+        bentoTurnstileToken = token;
+      },
+      'expired-callback': () => {
+        bentoTurnstileToken = '';
+      },
+      'error-callback': () => {
+        bentoTurnstileToken = '';
+      }
+    }
+  ) ?? null;
+}
+
+document.getElementById('bentoUpload')?.addEventListener(
+  'change',
+  prepareBentoTurnstile
+);
+
+document.querySelector(
+  'script[src^="https://challenges.cloudflare.com/turnstile/v0/api.js"]'
+)?.addEventListener('load', prepareBentoTurnstile);
 async function uploadBentoReference(file){
   if(!file) return null;
-  const allowed=['image/jpeg','image/png','image/webp'];
-  if(!allowed.includes(file.type)) throw new Error('Formato não permitido. Use JPG, PNG ou WEBP.');
-  if(file.size > 5 * 1024 * 1024) throw new Error('Imagem maior que 5MB. Envie uma imagem menor.');
-  if(window.BENTO_UPLOAD_ENDPOINT){
-    const form=new FormData();
-    form.append('file',file);
-    form.append('source','delicias-da-cida-bento');
-    const res=await fetch(window.BENTO_UPLOAD_ENDPOINT,{method:'POST',body:form});
-    if(!res.ok) throw new Error('upload-failed');
-    const data=await res.json();
-    return data.url || data.publicUrl || null;
+
+  const allowed = ['image/jpeg','image/png','image/webp'];
+
+  if(!allowed.includes(file.type)){
+    throw new Error('Formato de imagem nao permitido.');
   }
-  const cfg=window.SUPABASE_BENTO_CONFIG;
-  if(!cfg || !cfg.url || !cfg.key || !cfg.bucket) return null;
-  const ext=(file.name.split('.').pop() || (file.type.split('/')[1] || 'jpg')).toLowerCase().replace(/[^a-z0-9]/g,'') || 'jpg';
-  const stamp=new Date().toISOString().slice(0,10);
-  const random=Math.random().toString(36).slice(2,10);
-  const path=`${cfg.folder || 'pedidos-bento'}/${stamp}/${Date.now()}-${random}-${safeFileName(file.name || ('referencia.'+ext))}`;
-  const uploadUrl=`${cfg.url.replace(/\/$/,'')}/storage/v1/object/${cfg.bucket}/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
-  const res=await fetch(uploadUrl,{method:'POST',headers:{'apikey':cfg.key,'Authorization':`Bearer ${cfg.key}`,'Content-Type':file.type || 'application/octet-stream','x-upsert':'false'},body:file});
-  if(!res.ok) throw new Error('upload-failed');
-  return `${cfg.url.replace(/\/$/,'')}/storage/v1/object/public/${cfg.bucket}/${encodeURIComponent(path).replace(/%2F/g,'/')}`;
+
+  if(file.size > 5 * 1024 * 1024){
+    throw new Error('Imagem maior que 5 MB.');
+  }
+
+  const endpoint = window.BENTO_UPLOAD_ENDPOINT;
+
+  // Sem endpoint seguro, nao utilizar upload publico direto.
+  if(!endpoint) return null;
+
+  prepareBentoTurnstile();
+
+  if(!bentoTurnstileToken){
+    throw new Error('Verificacao de seguranca pendente.');
+  }
+
+  const form = new FormData();
+  form.append('file', file);
+  form.append('turnstile_token', bentoTurnstileToken);
+
+  const response = await fetch(endpoint, {
+    method: 'POST',
+    body: form,
+    headers: {
+      'apikey': window.SUPABASE_BENTO_CONFIG?.key || ''
+    }
+  });
+
+  bentoTurnstileToken = '';
+
+  if(bentoTurnstileWidgetId !== null && window.turnstile){
+    window.turnstile.reset(bentoTurnstileWidgetId);
+  }
+
+  if(!response.ok){
+    throw new Error('Upload protegido indisponivel.');
+  }
+
+  const result = await response.json();
+  return result.url || null;
 }
 document.getElementById('bentoFunForm')?.addEventListener('submit',async (e)=>{
   e.preventDefault();

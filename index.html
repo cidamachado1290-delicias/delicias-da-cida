@@ -360,6 +360,10 @@
 
               <label class="bento-upload-field">Tem uma imagem de inspiração? <small>(opcional)</small>
                 <input id="bentoUpload" type="file" accept="image/jpeg,image/png,image/webp">
+                <div id="bentoTurnstileArea" hidden>
+                  <div id="bentoTurnstileWidget"></div>
+                  <small>Verificacao de seguranca para enviar a imagem.</small>
+                </div>
                 <small class="upload-help" id="bentoUploadName">Você pode escolher uma foto ou flork. Ela será enviada por link quando possível; caso contrário, envie na conversa do WhatsApp.</small>
                 <div class="bento-upload-loading hidden" id="bentoUploadLoading"><span>🍰</span><strong>Preparando sua imagem...</strong></div>
                 <div class="bento-upload-preview hidden" id="bentoUploadPreview"></div>
@@ -533,6 +537,7 @@
   <script src="supabase-catalog-adapter.js"></script>
   <script src="products.js"></script>
   <script src="site-config.js"></script>
-  <script src="script.js"></script>
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
+<script src="script.js"></script>
 </body>
 </html>
