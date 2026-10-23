@@ -709,3 +709,17 @@ select#pessoas{appearance:auto}
  .cida-story-premium .cida-premium-overlay h4{font-size:clamp(16px,4vw,20px)}
  .cida-story-premium .cida-highlight-head h3{font-size:clamp(26px,7vw,34px)}
 }
+
+/* DELICIAS PACOTE 25: ATALHOS E INDICADORES */
+.category-showcase .category-copy h3{font-size:clamp(30px,3vw,45px);line-height:1.12;max-width:520px}
+.category-showcase .category-copy p{max-width:540px;line-height:1.6}
+.cida-story-premium .cida-story-media{gap:16px}
+.cida-story-premium .cida-stats-left{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:8px}
+.cida-story-premium .cida-stats-left>div{min-width:0;padding:16px 9px;border-radius:18px}
+.cida-story-premium .cida-stats-left b{font-size:clamp(23px,2.2vw,30px);line-height:1.1}
+.cida-story-premium .cida-stats-left span{display:block;margin-top:7px;font-size:12px;line-height:1.35;overflow-wrap:normal}
+@media(max-width:680px){
+ .cida-story-premium .cida-stats-left{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .cida-story-premium .cida-stats-left>div{padding:14px 10px}
+ .cida-story-premium .cida-stats-left b{font-size:28px}
+}

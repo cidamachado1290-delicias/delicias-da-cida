@@ -711,8 +711,8 @@
       const firstSlug = section.categorySlugs && section.categorySlugs[0];
       const cat = firstSlug ? findCategoryBySlugOrName(categories, firstSlug) : null;
       const href = cat ? categoryUrl(cat.id, section.title) : `#cardapio-premium`;
-      return `<a class="category-chip" href="${href}"><span>${esc(section.title)}</span><small>${section.gallery ? 'Ver galeria' : 'Ver opções oficiais'}</small></a>`;
-    }).concat(`<a class="category-chip" href="#cardapio-premium"><span>Galeria de Catálogos</span><small>Ver acervo visual</small></a>`);
+      return `<a class="category-chip" href="${href}"><span>${esc(section.title)}</span><small>${section.gallery ? 'Ver galeria' : 'Explorar categoria'}</small></a>`;
+    }).concat(`<a class="category-chip" href="#cardapio-premium"><span>Mais inspirações</span><small>Ver galeria</small></a>`);
     wrap.innerHTML = chips.join('');
   }
 
