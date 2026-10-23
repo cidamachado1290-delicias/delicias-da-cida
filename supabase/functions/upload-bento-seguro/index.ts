@@ -205,18 +205,9 @@ serve(async (req: Request) => {
 
     // Rate limit: executado apos validar o Turnstile,
     // antes de gravar o arquivo no Storage.
-    const forwarded = req.headers.get("x-forwarded-for") || "";
-    const clientIp = forwarded.split(",")[0].trim() || "unknown";
-
-    const digest = await crypto.subtle.digest(
-      "SHA-256",
-      new TextEncoder().encode(`${secret}:${clientIp}`)
-    );
-
-    const clientHash = Array.from(new Uint8Array(digest))
-      .map(b => b.toString(16).padStart(2, "0"))
-      .join("");
-
+    // Limite global: nao confiar em IP informado pelo cliente.
+    // A funcao SQL utiliza somente o contador global.
+    const clientHash = "0000000000000000000000000000000000000000000000000000000000000000";
     const { data: permitted, error: rateError } = await supabase.rpc(
       "bento_upload_rate_allow",
       { p_client_hash: clientHash }
