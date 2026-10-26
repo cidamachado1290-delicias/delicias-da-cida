@@ -344,14 +344,18 @@
     const id = product.id;
     const name = String(product.name || REAL_PRODUCTS[id]?.name || 'Delícia artesanal').replace(/^\s*\d+\)\s*/, '').trim();
     const img = imageOf(product);
-    const short = strip(product.short_description || product.description || '').slice(0, 150);
+    const preco = priceLabel(product);
+    const short = premiumSnippet(
+      product.short_description || product.description || '',
+      preco
+    );
     return `<article class="product-card" data-product-id="${esc(String(id))}" onclick="window.location.href='${productUrl(id)}'" tabindex="0" role="link" aria-label="Abrir ${esc(name)}">
       <div class="product-media ${img ? '' : 'no-image'}">${img ? `<img src="${esc(img)}" alt="${esc(name)}" loading="lazy" onerror="this.onerror=null;this.src='assets/logo.png';this.classList.add('image-fallback-logo')">` : `<span>${esc(name)}</span>`}</div>
       <div class="product-body">
         ${categoryKicker(product)}
         <h3>${esc(name)}</h3>
-        <p>${esc(short || 'Produto artesanal preparado sob encomenda, com confirmação de valores e disponibilidade pelo WhatsApp.')}</p>
-        <strong class="price-label">${esc(priceLabel(product))}</strong>
+        ${short ? `<p>${esc(short)}</p>` : ''}
+        <strong class="price-label">${esc(preco)}</strong>
       </div>
       <div class="product-actions">
         <a class="btn btn-ghost-dark" href="${productUrl(id)}" onclick="event.stopPropagation()">Ver detalhes</a>
