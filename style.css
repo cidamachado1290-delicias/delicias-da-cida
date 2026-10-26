@@ -830,3 +830,22 @@ select#pessoas{appearance:auto}
     text-decoration: none;
   }
 }
+
+/* CIDA - SELO SAZONAL MOBILE V1 */
+@media (max-width: 680px) {
+  .catalog-group .product-card .seasonal-badge,
+  .detail-list .product-card .seasonal-badge {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    padding: 6px 7px;
+    border-radius: 16px;
+    font-size: 9px;
+    line-height: 1.25;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+}
