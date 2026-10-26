@@ -831,21 +831,38 @@ select#pessoas{appearance:auto}
   }
 }
 
-/* CIDA - SELO SAZONAL MOBILE V1 */
+/* CIDA - TIPOGRAFIA MOBILE SAFARI V2 */
 @media (max-width: 680px) {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .catalog-group .product-card,
+  .detail-list .product-card {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
   .catalog-group .product-card .seasonal-badge,
   .detail-list .product-card .seasonal-badge {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    padding: 6px 7px;
+    display: block !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    padding: 7px 9px !important;
     border-radius: 16px;
-    font-size: 9px;
-    line-height: 1.25;
-    letter-spacing: 0;
+    font-family: Inter, Arial, sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 800;
+    line-height: 1.35 !important;
+    letter-spacing: 0 !important;
     text-align: center;
-    white-space: normal;
-    overflow-wrap: anywhere;
+    white-space: normal !important;
+    overflow-wrap: break-word !important;
+    word-break: normal !important;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
 }
