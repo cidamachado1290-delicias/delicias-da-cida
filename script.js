@@ -201,12 +201,17 @@ function gerarVidaDelicia(modo){
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+function formatarDataPedido(valor){
+  if(!valor) return '';
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(valor);
+  return match ? `${match[3]}/${match[2]}/${match[1]}` : valor;
+}
 document.getElementById('weddingForm')?.addEventListener('submit',(e)=>{e.preventDefault(); const msg=`Olá, Cida! Vim pelo site da Delícias da Cida e gostaria de solicitar um orçamento personalizado para casamento.
 
 💍 Informações dos noivos:
 
 • Nome dos noivos: ${v('nomesNoivos')}
-• Data do casamento: ${v('dataCasamento')}
+• Data do casamento: ${formatarDataPedido(v('dataCasamento'))}
 • Horário da festa: ${v('horaCasamento')}
 • Local do evento: ${v('localCasamento')}
 • Quantidade aproximada de convidados: ${v('convidadosCasamento')}
@@ -237,7 +242,7 @@ document.getElementById('partySweetForm')?.addEventListener('submit',(e)=>{e.pre
 🍬 Delícia de Festa:
 
 • Tipo de festa: ${tipo}
-• Data da festa: ${data || 'A confirmar'}
+• Data da festa: ${formatarDataPedido(data) || 'A confirmar'}
 • Horário: ${horario}
 • Quantidade de convidados: ${labelConvidados}
 • Doces de interesse: ${interesse}
@@ -246,7 +251,7 @@ document.getElementById('partySweetForm')?.addEventListener('submit',(e)=>{e.pre
 
 Gostaria de ver fotos, opções disponíveis, valores e confirmar a quantidade ideal para minha festa.`;
   const btn = ver==='Sim, quero ver no WhatsApp' ? `<button class="btn btn-primary full" onclick='abrirWhats(${JSON.stringify(msg)})'>Sim, quero ver fotos e valores</button>` : `<button class="btn btn-ghost-dark full" onclick='abrirWhats(${JSON.stringify(msg)})'>Enviar prévia para a Cida</button>`;
-  document.getElementById('partySweetResult').innerHTML=`<span class="pill">Sua Delícia de Festa</span><h3>${estimativa}</h3><p>Estimativa para <strong>${labelConvidados}</strong>, <strong>${tipo}</strong>, data <strong>${data || 'a confirmar'}</strong> e horário <strong>${horario}</strong>.</p><p>A Cida confirma sabores, fotos, opções, valores e quantidade ideal pelo WhatsApp.</p>${btn}`;
+  document.getElementById('partySweetResult').innerHTML=`<span class="pill">Sua Delícia de Festa</span><h3>${estimativa}</h3><p>Estimativa para <strong>${labelConvidados}</strong>, <strong>${tipo}</strong>, data <strong>${formatarDataPedido(data) || 'a confirmar'}</strong> e horário <strong>${horario}</strong>.</p><p>A Cida confirma sabores, fotos, opções, valores e quantidade ideal pelo WhatsApp.</p>${btn}`;
 });
 
 
